@@ -715,16 +715,16 @@ export function GetFeedbacksList(instance: InstanceSkel<AtemConfig>, model: Mode
               switch (type) {
                 case MacroFeedbackType.IsUsed:
                   const macro = state.macro.macroProperties[macroIndex]
-                  isActive = macro && macro.isUsed
+                  isActive = !!macro?.isUsed
                   break
                 case MacroFeedbackType.IsRecording:
-                  isActive = macroRecorder && macroRecorder.isRecording && macroRecorder.macroIndex === macroIndex
+                  isActive = macroRecorder.isRecording && macroRecorder.macroIndex === macroIndex
                   break
                 case MacroFeedbackType.IsRunning:
-                  isActive = macroPlayer && macroPlayer.isRunning && macroPlayer.macroIndex === macroIndex
+                  isActive = macroPlayer.isRunning && macroPlayer.macroIndex === macroIndex
                   break
                 case MacroFeedbackType.IsWaiting:
-                  isActive = macroPlayer && macroPlayer.isWaiting && macroPlayer.macroIndex === macroIndex
+                  isActive = macroPlayer.isWaiting && macroPlayer.macroIndex === macroIndex
                   break
                 default:
                   assertUnreachable(type)
