@@ -440,22 +440,22 @@ function transitionFeedbacks(instance: InstanceSkel<AtemConfig>, model: ModelSpe
           const rate = parseInt(evt.options.rate, 10)
           switch (style) {
             case Enums.TransitionStyle.MIX:
-              if (me.transitionSettings.mix.rate === rate) {
+              if (me.transitionSettings.mix?.rate === rate) {
                 return getOptColors(evt)
               }
               break
             case Enums.TransitionStyle.DIP:
-              if (me.transitionSettings.dip.rate === rate) {
+              if (me.transitionSettings.dip?.rate === rate) {
                 return getOptColors(evt)
               }
               break
             case Enums.TransitionStyle.WIPE:
-              if (me.transitionSettings.wipe.rate === rate) {
+              if (me.transitionSettings.wipe?.rate === rate) {
                 return getOptColors(evt)
               }
               break
             case Enums.TransitionStyle.DVE:
-              if (me.transitionSettings.DVE.rate === rate) {
+              if (me.transitionSettings.DVE?.rate === rate) {
                 return getOptColors(evt)
               }
               break
@@ -639,7 +639,7 @@ function dskFeedbacks(instance: InstanceSkel<AtemConfig>, model: ModelSpec, stat
           ],
           callback: evt => {
             const dsk = getDSK(state, evt.options.key)
-            if (dsk && dsk.sources.fillSource === parseInt(evt.options.fill, 10)) {
+            if (dsk && dsk.sources?.fillSource === parseInt(evt.options.fill, 10)) {
               return getOptColors(evt)
             }
             return {}
@@ -669,7 +669,7 @@ export function GetFeedbacksList(instance: InstanceSkel<AtemConfig>, model: Mode
             AtemAuxSourcePicker(model, state)
           ],
           callback: evt => {
-            const auxSource = state.video.auxilliaries[evt.options.aux]
+            const auxSource = state.video.auxilliaries[parseInt(evt.options.aux, 10)]
             if (auxSource === parseInt(evt.options.input, 10)) {
               return getOptColors(evt)
             }

@@ -254,20 +254,21 @@ export function GetAutoDetectModel() {
 }
 
 export function GetParsedModelSpec({ info, macro, media, inputs, settings, video }: AtemState): ModelSpec {
+  const defaults = GetAutoDetectModel()
   return {
     id: info.model,
-    label: info.productIdentifier,
+    label: info.productIdentifier ?? 'Blackmagic ATEM',
     inputs: inputs.filter(i => i.isExternal).length,
-    auxes: info.capabilities.auxilliaries,
-    MEs: info.capabilities.MEs,
-    USKs: video.ME[0] ? _.values(video.ME[0].upstreamKeyers).length : 0,
+    auxes: info.capabilities?.auxilliaries ?? defaults.auxes,
+    MEs: info.capabilities?.mixEffects ?? defaults.MEs,
+    USKs: video.ME[0]?.upstreamKeyers.length ?? defaults.USKs,
     DSKs: _.values(video.downstreamKeyers).length,
     MVs: _.values(settings.multiViewers).length,
     multiviewerFullGrid: false, // TODO
-    SSrc: info.capabilities.superSources,
+    SSrc: info.capabilities?.superSources ?? defaults.SSrc,
     macros: macro.macroProperties.length,
     media: {
-      players: info.capabilities.mediaPlayers,
+      players: info.capabilities?.mediaPlayers ?? defaults.media.players,
       stills: media.stillPool.length,
       clips: media.clipPool.length
     }
