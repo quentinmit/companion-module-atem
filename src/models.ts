@@ -253,7 +253,7 @@ export function GetAutoDetectModel() {
   return ALL_MODELS[0]
 }
 
-export function GetParsedModelSpec({ info, macro, media, inputs, settings, video }: AtemState): ModelSpec {
+export function GetParsedModelSpec({ info, inputs, settings }: AtemState): ModelSpec {
   const defaults = GetAutoDetectModel()
   return {
     id: info.model,
@@ -261,16 +261,16 @@ export function GetParsedModelSpec({ info, macro, media, inputs, settings, video
     inputs: inputs.filter(i => i.isExternal).length,
     auxes: info.capabilities?.auxilliaries ?? defaults.auxes,
     MEs: info.capabilities?.mixEffects ?? defaults.MEs,
-    USKs: video.ME[0]?.upstreamKeyers.length ?? defaults.USKs,
-    DSKs: _.values(video.downstreamKeyers).length,
+    USKs: info.mixEffects[0]?.keyCount ?? defaults.USKs,
+    DSKs: info.capabilities?.downstreamKeyers ?? defaults.DSKs,
     MVs: _.values(settings.multiViewers).length,
     multiviewerFullGrid: false, // TODO
     SSrc: info.capabilities?.superSources ?? defaults.SSrc,
-    macros: macro.macroProperties.length,
+    macros: info.macroPool?.macroCount ?? defaults.macros,
     media: {
       players: info.capabilities?.mediaPlayers ?? defaults.media.players,
-      stills: media.stillPool.length,
-      clips: media.clipPool.length
+      stills: info.mediaPool?.stillCount ?? defaults.media.stills,
+      clips: info.mediaPool?.clipCount ?? defaults.media.clips
     }
   }
 }
